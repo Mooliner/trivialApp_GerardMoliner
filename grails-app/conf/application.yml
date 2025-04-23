@@ -1,0 +1,89 @@
+info:
+  app:
+    name: '@info.app.name@'
+    version: '@info.app.version@'
+    grailsVersion: '@info.app.grailsVersion@'
+
+grails:
+  mongodb:
+    url: mongodb+srv://admin:pVWLSrnoOgfEoSHU@cluster0.an2dj.mongodb.net/laMolina?retryWrites=true&w=majority&appName=Cluster0
+
+  mime:
+    disable:
+      accept:
+        header:
+          userAgents:
+            - Gecko
+            - WebKit
+            - Presto
+            - Trident
+    types:
+      json:
+        - application/json
+        - text/json
+      hal:
+        - application/hal+json
+        - application/hal+xml
+      xml:
+        - text/xml
+        - application/xml
+      atom: application/atom+xml
+      css: text/css
+      csv: text/csv
+      js: text/javascript
+      rss: application/rss+xml
+      text: text/plain
+      all: '*/*'
+      form: application/x-www-form-urlencoded
+      html:
+        - text/html
+        - application/xhtml+xml
+      multipartForm: multipart/form-data
+      pdf: application/pdf
+
+  plugin:
+    springsecurity:
+      successHandler:
+        defaultTargetUrl: "/question/index"
+      failureHandler:
+        defaultFailureUrl: "/login"
+      logout:
+        afterLogoutUrl: "/login"
+      auth:
+        loginFormUrl: "/login"
+      userLookup:
+        userDomainClassName: 'trivialApp.User'
+        authorityJoinClassName: 'trivialApp.UserRole'
+      authority:
+        className: 'trivialApp.Role'
+      controllerAnnotations:
+        staticRules:
+          - pattern: '/user/**'
+            access: ['ROLE_ADMIN']
+          - pattern: '/question/**'
+            access: ['ROLE_ADMIN', 'ROLE_USER']
+          - pattern: '/login/**'
+            access: ['permitAll']
+          - pattern: '/logout/**'
+            access: ['permitAll']
+          - pattern: '/assets/**'
+            access: ['permitAll']
+          - pattern: '/**'
+            access: ['IS_AUTHENTICATED_ANONYMOUSLY']
+
+
+  codegen:
+    defaultPackage: trivialApp
+
+  profile: web
+  views:
+    default:
+      codec: html
+    gsp:
+      encoding: UTF-8
+      htmlcodec: xml
+      codecs:
+        expression: html
+        scriptlet: html
+        taglib: none
+        staticparts: none
